@@ -7,7 +7,17 @@
 
     <div>
       <label>Email</label><br />
-      <input v-model="localForm.email" type="email" />
+      <input
+        v-model="localForm.email"
+        type="email"
+        @blur="emailTouched = true"
+      />
+      <div
+        v-if="emailTouched && localForm.email && !isEmailValid"
+        style="color: #b00020; font-size: 0.9em; margin-top: 2px;"
+      >
+        O email deve conter "@"
+      </div>
     </div>
 
     <div>
@@ -21,14 +31,14 @@
     </div>
 
     <div class="form-actions">
-      <button type="submit">Salvar</button>
+      <button type="submit" :disabled="!isEmailValid">Salvar</button>
       <router-link to="/companies">Cancelar</router-link>
     </div>
   </form>
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue'
+import { reactive, watch, computed, ref } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -40,12 +50,20 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'submit'])
 
 const localForm = reactive({ ...props.modelValue })
+const emailTouched = ref(false)
 
 watch(localForm, (val) => {
   emit('update:modelValue', val)
 }, { deep: true })
 
+const isEmailValid = computed(() => localForm.email.includes('@'))
+
 function submit() {
+  emailTouched.value = true
+  if (!isEmailValid.value) {
+    alert('Por favor, insira um email válido contendo "@"')
+    return
+  }
   emit('submit', { ...localForm })
 }
 
