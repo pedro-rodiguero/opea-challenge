@@ -1,0 +1,64 @@
+/* CSS Reset and base box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Remove default input styles */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border-radius: 0;
+  outline: none;
+  border: none;
+}
+
+/* Remove default table spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove default image border */
+img {
+  border-style: none;
+  max-width: 100%;
+  display: block;
+}
+
+/* Set base background and color */
+body {
+  background: $background-light;
+  color: $font-color;
+  min-height: 100vh;
+  font-family: $font-main, Arial, sans-serif;
+}

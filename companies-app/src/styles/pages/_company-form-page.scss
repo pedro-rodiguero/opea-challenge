@@ -1,0 +1,27 @@
+@import '../base/variables';
+
+// Company Form Page Styles
+
+.company-form-page {
+  padding: 2rem 0;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: $primary-color;
+    font-family: $font-main;
+    font-weight: 500;
+  }
+
+  .company-form {
+    margin-top: 1rem;
+  }
+}
+
+/* Utility: Center content if needed */
+.company-form-page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

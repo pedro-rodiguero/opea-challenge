@@ -1,0 +1,27 @@
+@import '../base/variables';
+
+// Companies Page Styles
+
+.companies-page {
+  padding: 2rem 0;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: $primary-color;
+    font-family: $font-main;
+    font-weight: 500;
+  }
+
+  .company-list-table {
+    margin-top: 1rem;
+  }
+}
+
+/* Utility: Center content if needed */
+.companies-page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

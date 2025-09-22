@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="company-form-page">
     <h2>{{ isEdit ? 'Editar' : 'Nova' }} Empresa</h2>
     <CompanyForm v-model="form" @submit="submit" />
   </div>

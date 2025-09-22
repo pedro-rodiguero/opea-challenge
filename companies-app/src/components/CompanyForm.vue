@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit">
+  <form class="company-form" @submit.prevent="submit">
     <div>
       <label>Nome</label><br />
       <input v-model="localForm.name" />
@@ -15,9 +15,9 @@
       <input v-model="localForm.cnpj" />
     </div>
 
-    <div style="margin-top:12px">
+    <div class="form-actions">
       <button type="submit">Salvar</button>
-      <router-link to="/companies" style="margin-left:8px">Cancelar</router-link>
+      <router-link to="/companies">Cancelar</router-link>
     </div>
   </form>
 </template>
