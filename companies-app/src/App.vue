@@ -1,13 +1,13 @@
 <template>
-<div>
-<nav style="padding:10px;background:#fafafa;border-bottom:1px solid #eee">
-<a href="/">Home</a> |
-<router-link to="/companies">Empresas</router-link>
-</nav>
+  <div>
+    <nav class="navbar">
+      <img src="./assets/opea_logo.svg" alt="Opea Logo" style="height:32px; margin-right:16px;" />
+      <a href="/">Home</a>
+      <router-link to="/companies">Empresas</router-link>
+    </nav>
 
-
-<main style="padding:16px">
-<router-view />
-</main>
-</div>
+    <main style="padding:16px">
+      <router-view />
+    </main>
+  </div>
 </template>
