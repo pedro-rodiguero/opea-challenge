@@ -2,8 +2,8 @@
   <div>
     <div class="company-list-search">
       <input v-model="search" @keyup.enter="onSearch" placeholder="Buscar por nome ou CNPJ" type="text" />
-      <button @click="onSearch">Buscar</button>
-      <router-link to="/companies/new">+ Nova Empresa</router-link>
+      <button @click="onSearch" class="btn-search">Buscar</button>
+      <router-link to="/companies/new" class="btn-new">+ Nova Empresa</router-link>
     </div>
 
     <table class="company-list-table">
@@ -21,8 +21,8 @@
           <td>{{ c.email }}</td>
           <td>{{ c.cnpj }}</td>
           <td class="company-list-actions">
-            <button @click="$router.push(`/companies/${c.id}/edit`)">Editar</button>
-            <button @click="$emit('delete', c.id)">Excluir</button>
+            <router-link :to="`/companies/${c.id}/edit`" class="btn-edit">Editar</router-link>
+            <button @click="$emit('delete', c.id)" class="btn-delete">Excluir</button>
           </td>
         </tr>
         <tr v-if="companies.length===0">
