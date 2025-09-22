@@ -21,7 +21,7 @@
           <td>{{ c.email }}</td>
           <td>{{ c.cnpj }}</td>
           <td class="company-list-actions">
-            <router-link :to="`/companies/${c.id}/edit`">Editar</router-link>
+            <button @click="$router.push(`/companies/${c.id}/edit`)">Editar</button>
             <button @click="$emit('delete', c.id)">Excluir</button>
           </td>
         </tr>

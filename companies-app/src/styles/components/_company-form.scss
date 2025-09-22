@@ -80,13 +80,12 @@
     button:last-child {
       background: #fff;
       color: $primary-color;
-      border: 1.5px solid $primary-color;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      transition: background 0.5s, color 0.5s, border-color 0.5s;
 
       &:hover {
         background: $secondary-color;
         color: #fff;
-        border-color: darken($primary-color, 10%);
+        border-color: $secondary-color;
       }
     }
 }

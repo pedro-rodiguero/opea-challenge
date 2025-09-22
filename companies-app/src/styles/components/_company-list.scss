@@ -56,16 +56,34 @@
   }
 
   .router-link {
-    background: $background-grey;
-    color: $font-color;
-    border: 1px solid $border-color;
+    background: #fff;
+    color: $primary-color;
+    border: 1.5px solid $primary-color;
     text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+
     &:hover {
-      border-color: $primary-color;
-      color: $primary-color;
+      background: $secondary-color;
+      color: #fff;
+      border-color: darken($primary-color, 10%);
     }
   }
+
+      button:last-child {
+      background: #fff;
+      color: $primary-color;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+      &:hover {
+        background: $secondary-color;
+        color: #fff;
+        border-color: darken($secondary-color, 10%);
+      }
+    }
 }
+
+
 
 .company-list-search {
   margin-bottom: 12px;
