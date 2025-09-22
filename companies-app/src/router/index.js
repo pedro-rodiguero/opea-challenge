@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CompaniesPage from '../pages/CompaniesPage.vue'
-import CompanyFormPage from '../pages/CompaniesForm.vue'
+import CompanyFormPage from '../pages/CompanyFormPage.vue'
 
 
 const routes = [
