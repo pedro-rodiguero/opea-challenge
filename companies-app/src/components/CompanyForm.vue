@@ -56,6 +56,11 @@ const localForm = reactive({ ...props.modelValue })
 const touched = reactive({ name: false, email: false, cnpj: false })
 const errors = reactive({ name: '', email: '', cnpj: '' })
 
+watch(() => props.modelValue, (newVal) => {
+  // Sync external modelValue changes with localForm
+  Object.assign(localForm, newVal)
+}, { deep: true })
+
 watch(localForm, (val) => {
   emit('update:modelValue', val)
   validate()

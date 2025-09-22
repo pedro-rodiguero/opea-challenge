@@ -10,6 +10,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import CompanyService from '../services/CompanyService'
 import CompanyForm from '../components/CompanyForm.vue'
+import { formatCnpj } from '../utils/formatters.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -23,7 +24,12 @@ onMounted(async () => {
   if (isEdit) {
     try {
       const res = await CompanyService.get(id)
-      Object.assign(form.value, res.data)
+      const companyData = res.data
+      // Format CNPJ for display
+      if (companyData.cnpj) {
+        companyData.cnpj = formatCnpj(companyData.cnpj)
+      }
+      Object.assign(form.value, companyData)
     } catch (err) {
       console.error(err)
       alert('Erro ao carregar empresa')
