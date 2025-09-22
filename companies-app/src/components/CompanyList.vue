@@ -8,9 +8,11 @@
           @keyup.enter="onSearch"
           placeholder="Buscar empresa..."
           type="text"
+          :disabled="loading"
         />
-        <button @click="onSearch" class="btn-search">
-          <img src="../assets/icons/search-icon.svg" alt="Buscar" />
+        <button @click="onSearch" class="btn-search" :disabled="loading">
+          <span v-if="loading" class="spinner"></span>
+          <img v-else src="../assets/icons/search-icon.svg" alt="Buscar" />
         </button>
       </div>
       <router-link to="/companies/new" class="btn-new">Adicionar Empresa</router-link>
@@ -39,8 +41,9 @@
           <router-link :to="`/companies/${c.id}/edit`" class="action-icon" title="Editar">
             <img src="../assets/icons/edit.svg" alt="Editar" />
           </router-link>
-          <button @click="$emit('delete', c.id)" class="action-icon" title="Excluir">
-            <img src="../assets/icons/trash.svg" alt="Excluir" />
+          <button @click="$emit('delete', c.id)" class="action-icon" :disabled="deletingId === c.id" title="Excluir">
+            <span v-if="deletingId === c.id" class="spinner"></span>
+            <img v-else src="../assets/icons/trash.svg" alt="Excluir" />
           </button>
         </div>
       </div>
@@ -60,6 +63,14 @@ const props = defineProps({
   companies: {
     type: Array,
     default: () => []
+  },
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  deletingId: {
+    type: [Number, null],
+    default: null
   }
 })
 
@@ -115,5 +126,26 @@ button.action-icon {
 
 .company-info a:hover {
   text-decoration: underline;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinner-spin 0.75s linear infinite;
+}
+
+@keyframes spinner-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 </style>

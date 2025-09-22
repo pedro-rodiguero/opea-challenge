@@ -29,7 +29,10 @@
     </div>
 
     <div class="form-actions">
-      <button type="submit" :disabled="!isFormValid">Salvar</button>
+      <button type="submit" :disabled="!isFormValid || loading">
+        <span v-if="loading" class="spinner"></span>
+        <span>{{ loading ? 'Salvando...' : 'Salvar' }}</span>
+      </button>
       <button @click="$router.push('/companies')">Cancelar</button>
     </div>
   </form>
@@ -46,6 +49,10 @@ const props = defineProps({
   },
   apiErrors: {
     type: Object,
+    default: () => ({})
+  },
+  loading: {
+    type: Boolean,
     default: () => ({})
   }
 })
@@ -128,5 +135,28 @@ function onCnpjInput(e) {
   color: #b00020;
   font-size: 0.9em;
   margin-top: 4px;
+}
+
+.form-actions button[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinner-spin 0.75s linear infinite;
+}
+
+@keyframes spinner-spin {
+  to {
+    transform: rotate(1turn);
+  }
 }
 </style>
