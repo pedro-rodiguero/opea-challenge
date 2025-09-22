@@ -28,7 +28,7 @@
         </div>
         <div class="company-info">
           <h3>{{ c.name }}</h3>
-          <p>CNPJ: {{ c.cnpj }} - Email: {{ c.email }}</p>
+          <p>CNPJ: {{ formatCnpj(c.cnpj) }} - Email: {{ c.email }}</p>
         </div>
         <div class="company-actions">
           <router-link :to="`/companies/${c.id}/edit`" class="action-icon" title="Editar">
@@ -49,6 +49,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { formatCnpj } from '../utils/formatters.js'
 
 const props = defineProps({
   companies: {
