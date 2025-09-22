@@ -21,7 +21,7 @@ async function fetch(query = '') {
     const params = {}
     if (query) params.name = query
     const res = await CompanyService.list(params)
-    companies.value = res.data
+    companies.value = res.data.companies // <-- Only the array!
   } catch (err) {
     console.error(err)
     alert('Erro ao carregar empresas')
