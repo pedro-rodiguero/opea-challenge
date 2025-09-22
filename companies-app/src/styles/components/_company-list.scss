@@ -1,13 +1,15 @@
 @import '../base/variables';
 
-// Primary button (solid)
 %btn-primary {
   font-family: $font-main;
   font-size: 1rem;
   border-radius: $radius-sm;
-  padding: 0.4em 1em;
+  padding: 0.6em 1.2em;
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   background: $primary-color;
   color: #fff;
@@ -19,104 +21,151 @@
   }
 }
 
-// Secondary button (outline)
 %btn-secondary {
   font-family: $font-main;
   font-size: 1rem;
   border-radius: $radius-sm;
-  padding: 0.4em 1em;
+  padding: 0.6em 1.2em;
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   border: 1.5px solid $primary-color;
   background: #fff;
   color: $primary-color;
 
   &:hover {
-    background: $secondary-color;
+    background: red;
     color: #fff;
     border-color: $secondary-color;
   }
 }
 
-// Company List Table Styles
+.company-list {
+  .company-list-search {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-.company-list-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 24px;
-  background: $white;
-  border-radius: $radius-md;
-  box-shadow: 0px 1px 2px $shadow-color;
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+    }
 
-  th, td {
-    padding: 12px 8px;
-    border: 1px solid $border-color;
-    text-align: left;
-    font-family: $font-main;
-    font-size: 1rem;
-    color: $font-color;
-  }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 40px 8px 12px; /* Make space for the icon on the right */
+      border: 1px solid $border-color;
+      border-radius: $radius-sm;
+      font-family: $font-main;
+      font-size: 1rem;
+      background: $background-light;
+      box-sizing: border-box;
 
-  th {
-    background: $background-light;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
 
-  tbody tr:nth-child(even) {
-    background: $background-grey;
-  }
+    .btn-search {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  tbody tr:hover {
-    background: $background-info;
-  }
-}
+      img {
+        width: 20px;
+        height: 20px;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+      }
 
-.company-list-actions {
-  display: flex;
-  gap: 8px;
+      &:hover img {
+        opacity: 1;
+      }
+    }
 
-  .btn-edit {
-    @extend %btn-secondary;
-    // Apply hover state by default for "highlighted" look
-    background: $secondary-color;
-    color: #fff;
-    border-color: $secondary-color;
-  }
-
-  .btn-delete {
-    @extend %btn-secondary;
-  }
-}
-
-
-
-.company-list-search {
-  margin-bottom: 12px;
-  display: flex;
-  gap: 8px;
-
-  input[type="text"] {
-    padding: 8px 12px;
-    border: 1px solid $border-color;
-    border-radius: $radius-sm;
-    font-family: $font-main;
-    font-size: 1rem;
-    color: $font-color;
-    background: $background-light;
-
-    &:focus {
-      outline: none;
-      border-color: $primary-color;
+    .btn-new {
+      @extend %btn-primary;
+      white-space: nowrap;
     }
   }
 
-  .btn-search {
-    @extend %btn-secondary;
+  .company-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .btn-new {
-    @extend %btn-primary;
+  .company-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border-radius: $radius-md;
+    padding: 16px;
+    box-shadow: 0px 1px 2px $shadow-color;
+
+    .company-icon {
+      font-size: 1.5rem;
+      color: $primary-color;
+      flex-shrink: 0;
+    }
+
+    .company-info {
+      flex: 1;
+
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        font-family: $font-main;
+      }
+
+      p {
+        margin: 4px 0 0;
+        font-size: 0.95rem;
+        color: $font-color;
+      }
+    }
+
+    .company-actions {
+      display: flex;
+      gap: 8px;
+
+      .btn-edit {
+        @extend %btn-secondary;
+        background: $secondary-color;
+        color: #fff;
+        border-color: $secondary-color;
+
+        &:hover {
+          background: darken($secondary-color, 5%);
+          border-color: darken($secondary-color, 10%);
+        }
+      }
+
+      .btn-delete {
+        @extend %btn-secondary;
+      }
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 24px;
+    color: $font-color;
+    font-style: italic;
   }
 }

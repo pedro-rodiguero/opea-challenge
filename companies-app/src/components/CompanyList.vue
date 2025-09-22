@@ -1,35 +1,45 @@
 <template>
-  <div>
+  <div class="company-list">
+    <!-- Barra de busca -->
     <div class="company-list-search">
-      <input v-model="search" @keyup.enter="onSearch" placeholder="Buscar por nome ou CNPJ" type="text" />
-      <button @click="onSearch" class="btn-search">Buscar</button>
-      <router-link to="/companies/new" class="btn-new">+ Nova Empresa</router-link>
+      <div class="search-input-wrapper">
+        <input
+          v-model="search"
+          @keyup.enter="onSearch"
+          placeholder="Buscar empresa..."
+          type="text"
+        />
+        <button @click="onSearch" class="btn-search">
+          <img src="./assets/search-icon.svg" alt="Buscar" />
+        </button>
+      </div>
+      <router-link to="/companies/new" class="btn-new">Adicionar Empresa</router-link>
     </div>
 
-    <table class="company-list-table">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>CNPJ</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="c in companies" :key="c.id">
-          <td>{{ c.name }}</td>
-          <td>{{ c.email }}</td>
-          <td>{{ c.cnpj }}</td>
-          <td class="company-list-actions">
-            <router-link :to="`/companies/${c.id}/edit`" class="btn-edit">Editar</router-link>
-            <button @click="$emit('delete', c.id)" class="btn-delete">Excluir</button>
-          </td>
-        </tr>
-        <tr v-if="companies.length===0">
-          <td colspan="4">Nenhuma empresa encontrada.</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Lista de empresas -->
+    <div class="company-cards">
+      <div
+        v-for="c in companies"
+        :key="c.id"
+        class="company-card"
+      >
+        <div class="company-icon">
+          <i class="fas fa-building"></i>
+        </div>
+        <div class="company-info">
+          <h3>{{ c.name }}</h3>
+          <p>CNPJ: {{ c.cnpj }} - Email: {{ c.email }}</p>
+        </div>
+        <div class="company-actions">
+          <router-link :to="`/companies/${c.id}/edit`" class="btn-edit">Editar</router-link>
+          <button @click="$emit('delete', c.id)" class="btn-delete">Excluir</button>
+        </div>
+      </div>
+
+      <div v-if="companies.length === 0" class="no-results">
+        Nenhuma empresa encontrada.
+      </div>
+    </div>
   </div>
 </template>
 
