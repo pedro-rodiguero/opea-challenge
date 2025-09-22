@@ -12,7 +12,12 @@
 
     <div>
       <label>CNPJ</label><br />
-      <input v-model="localForm.cnpj" />
+      <input
+        v-model="localForm.cnpj"
+        @input="onCnpjInput"
+        maxlength="18"
+        placeholder="00.000.000/0000-00"
+      />
     </div>
 
     <div class="form-actions">
@@ -23,9 +28,8 @@
 </template>
 
 <script setup>
-import { reactive, watch, toRefs } from 'vue'
+import { reactive, watch } from 'vue'
 
-// Props: o formulário recebe dados iniciais
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -33,17 +37,25 @@ const props = defineProps({
   }
 })
 
-// Emite eventos pro pai (submit, update:modelValue)
 const emit = defineEmits(['update:modelValue', 'submit'])
 
 const localForm = reactive({ ...props.modelValue })
 
-// Sincroniza com o pai sempre que localForm mudar
 watch(localForm, (val) => {
   emit('update:modelValue', val)
 }, { deep: true })
 
 function submit() {
   emit('submit', { ...localForm })
+}
+
+// CNPJ mask handler
+function onCnpjInput(e) {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 14)
+  v = v.replace(/^(\d{2})(\d)/, '$1.$2')
+  v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+  v = v.replace(/\.(\d{3})(\d)/, '.$1/$2')
+  v = v.replace(/(\d{4})(\d)/, '$1-$2')
+  localForm.cnpj = v
 }
 </script>

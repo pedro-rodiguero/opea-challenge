@@ -18,18 +18,28 @@
     display: block;
   }
 
-  input[type="text"],
-  input[type="email"] {
+    input {
     width: 100%;
     padding: 8px 12px;
     font-family: $font-main;
     font-size: 1rem;
-    border: 1px solid #ddd;
+    border: 1.5px solid #ddd;
     border-radius: 4px;
     margin-bottom: 16px;
     color: #616161;
     background: #f7f7f7;
+    transition: border-color 0.2s, box-shadow 0.2s;
 
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.15);
+      background: #fff;
+    }
+  }
+
+  input[type="text"],
+  input[type="email"] {
     &:focus {
       outline: none;
       border-color: $primary-color;
