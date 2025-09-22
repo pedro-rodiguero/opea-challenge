@@ -32,7 +32,7 @@
 
     <div class="form-actions">
       <button type="submit" :disabled="!isEmailValid">Salvar</button>
-      <router-link to="/companies">Cancelar</router-link>
+      <button @click="$router.push('/companies')">Cancelar</button>
     </div>
   </form>
 </template>
