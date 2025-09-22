@@ -1,0 +1,99 @@
+@import '../base/variables';
+
+// Company List Table Styles
+
+.company-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  background: $white;
+  border-radius: $radius-md;
+  box-shadow: 0px 1px 2px $shadow-color;
+
+  th, td {
+    padding: 12px 8px;
+    border: 1px solid $border-color;
+    text-align: left;
+    font-family: $font-main;
+    font-size: 1rem;
+    color: $font-color;
+  }
+
+  th {
+    background: $background-light;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  tbody tr:nth-child(even) {
+    background: $background-grey;
+  }
+
+  tbody tr:hover {
+    background: $background-info;
+  }
+}
+
+.company-list-actions {
+  display: flex;
+  gap: 8px;
+
+  button,
+  .router-link {
+    font-family: $font-main;
+    font-size: 1rem;
+    border-radius: $radius-sm;
+    padding: 0.4em 1em;
+    border: 1px solid transparent;
+    background: $primary-color;
+    color: $white;
+    cursor: pointer;
+    transition: border-color 0.25s;
+
+    &:hover {
+      border-color: darken($primary-color, 10%);
+    }
+  }
+
+  .router-link {
+    background: $background-grey;
+    color: $font-color;
+    border: 1px solid $border-color;
+    text-decoration: none;
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+  }
+}
+
+.company-list-search {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+
+  input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    font-family: $font-main;
+    font-size: 1rem;
+    color: $font-color;
+    background: $background-light;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+
+  button {
+    @extend .company-list-actions;
+    @extend button;
+  }
+
+  .router-link {
+    @extend .company-list-actions;
+    @extend .router-link;
+  }
+}

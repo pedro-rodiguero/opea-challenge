@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="companies-page">
     <h1>Empresas</h1>
     <CompanyList
       :companies="companies"

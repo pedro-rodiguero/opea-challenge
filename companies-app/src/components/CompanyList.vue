@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div style="margin-bottom:12px">
-      <input v-model="search" @keyup.enter="onSearch" placeholder="Buscar por nome ou CNPJ" />
+    <div class="company-list-search">
+      <input v-model="search" @keyup.enter="onSearch" placeholder="Buscar por nome ou CNPJ" type="text" />
       <button @click="onSearch">Buscar</button>
-      <router-link to="/companies/new" style="margin-left:8px">+ Nova Empresa</router-link>
+      <router-link to="/companies/new">+ Nova Empresa</router-link>
     </div>
 
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table class="company-list-table">
       <thead>
         <tr>
           <th>Nome</th>
@@ -20,9 +20,9 @@
           <td>{{ c.name }}</td>
           <td>{{ c.email }}</td>
           <td>{{ c.cnpj }}</td>
-          <td>
+          <td class="company-list-actions">
             <router-link :to="`/companies/${c.id}/edit`">Editar</router-link>
-            <button @click="$emit('delete', c.id)" style="margin-left:8px">Excluir</button>
+            <button @click="$emit('delete', c.id)">Excluir</button>
           </td>
         </tr>
         <tr v-if="companies.length===0">
