@@ -28,7 +28,12 @@
         </div>
         <div class="company-info">
           <h3>{{ c.name }}</h3>
-          <p>CNPJ: {{ formatCnpj(c.cnpj) }} - Email: {{ c.email }}</p>
+          <p>
+            CNPJ:
+            <a :href="`https://cnpja.com/office/${c.cnpj.replace(/\D/g, '')}`" target="_blank" rel="noopener noreferrer" title="Consultar CNPJ">
+              {{ formatCnpj(c.cnpj) }}
+            </a> - Email: {{ c.email }}
+          </p>
         </div>
         <div class="company-actions">
           <router-link :to="`/companies/${c.id}/edit`" class="action-icon" title="Editar">
@@ -100,5 +105,15 @@ function onSearch() {
 
 button.action-icon {
   padding: 0;
+}
+
+.company-info a {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.company-info a:hover {
+  text-decoration: underline;
 }
 </style>
