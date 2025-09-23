@@ -83,14 +83,10 @@ watch(form, () => {
 
 // Clear API errors on input change
 watch(() => form.email, () => {
-  if (apiErrors.value.email) {
-    apiErrors.value.email = ''
-  }
+  if (apiErrors.value.email) apiErrors.value.email = ''
 })
 watch(() => form.cnpj, () => {
-  if (apiErrors.value.cnpj) {
-    apiErrors.value.cnpj = ''
-  }
+  if (apiErrors.value.cnpj) apiErrors.value.cnpj = ''
 })
 
 watch(apiErrors, (newErrors) => {
@@ -102,7 +98,12 @@ const isEmailValid = computed(() => form.email.includes('@'))
 const isCnpjValid = computed(() => validateCnpj(form.cnpj))
 
 const isFormValid = computed(() => {
-  return isNameValid.value && isEmailValid.value && isCnpjValid.value && Object.values(apiErrors.value).every(e => !e)
+  return (
+    isNameValid.value &&
+    isEmailValid.value &&
+    isCnpjValid.value &&
+    Object.values(apiErrors.value).every(e => !e)
+  )
 })
 
 function validate() {
@@ -143,9 +144,12 @@ async function submit() {
   try {
     const cnpjClean = form.cnpj.replace(/\D/g, '')
 
+    // verifica duplicidade apenas se mudou
     if (form.email !== originalData.value.email) {
       const { data: emailRes } = await CompanyService.list({ email: form.email })
-      const emailExists = (emailRes.companies || emailRes).some(c => c.email === form.email && String(c.id) !== props.id)
+      const emailExists = (emailRes.companies || emailRes).some(
+        c => c.email === form.email && String(c.id) !== props.id
+      )
       if (emailExists) {
         apiErrors.value.email = 'Este email já está em uso.'
       }
@@ -153,7 +157,9 @@ async function submit() {
 
     if (cnpjClean !== originalData.value.cnpj) {
       const { data: cnpjRes } = await CompanyService.list({ cnpj: cnpjClean })
-      const cnpjExists = (cnpjRes.companies || cnpjRes).some(c => c.cnpj === cnpjClean && String(c.id) !== props.id)
+      const cnpjExists = (cnpjRes.companies || cnpjRes).some(
+        c => c.cnpj === cnpjClean && String(c.id) !== props.id
+      )
       if (cnpjExists) {
         apiErrors.value.cnpj = 'Este CNPJ já está cadastrado.'
       }
@@ -181,6 +187,14 @@ async function submit() {
     }
 
     await CompanyService.update(props.id, payload)
+
+    // sobrescreve originalData com os dados salvos
+    originalData.value = {
+      name: form.name,
+      email: form.email,
+      cnpj: cnpjClean
+    }
+
     toast.success('Empresa atualizada com sucesso!')
     router.push('/companies')
   } catch (err) {
