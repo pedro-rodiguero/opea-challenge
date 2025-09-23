@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CompaniesPage from '../pages/CompaniesPage.vue'
-import CompanyFormPage from '../pages/CompanyFormPage.vue'
+import CompanyCreatePage from '../pages/CompanyCreatePage.vue'
+import CompanyEditPage from '../pages/CompanyEditPage.vue'
 
 
 const routes = [
 { path: '/', redirect: '/companies' },
 { path: '/companies', component: CompaniesPage },
-{ path: '/companies/new', component: CompanyFormPage },
-{ path: '/companies/:id/edit', component: CompanyFormPage, props: true }
+{ path: '/companies/new', name: 'CompanyCreate', component: CompanyCreatePage },
+{ path: '/companies/:id/edit', name: 'CompanyEdit', component: CompanyEditPage }
 ]
 
 

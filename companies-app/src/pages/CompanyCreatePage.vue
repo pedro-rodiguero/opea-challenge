@@ -1,6 +1,6 @@
 <template>
   <div class="company-form-page">
-    <h2>{{ isEdit ? 'Editar' : 'Nova' }} Empresa</h2>
+    <h2>Nova Empresa</h2>
     <CompanyForm
       v-model="form"
       @submit="submit"
@@ -11,39 +11,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import CompanyService from '../services/CompanyService'
 import CompanyForm from '../components/CompanyForm.vue'
-import { formatCnpj } from '../utils/formatters.js'
 
-const route = useRoute()
 const router = useRouter()
 const toast = useToast()
-const id = route.params.id
-const isEdit = !!id
 
 const form = ref({ name: '', email: '', cnpj: '' })
 const apiErrors = ref({})
 const loading = ref(false)
-
-onMounted(async () => {
-  if (isEdit) {
-    try {
-      const res = await CompanyService.get(id)
-      const companyData = res.data
-      // Format CNPJ for display
-      if (companyData.cnpj) {
-        companyData.cnpj = formatCnpj(companyData.cnpj)
-      }
-      Object.assign(form.value, companyData)
-    } catch (err) {
-      console.error(err)
-      toast.error('Erro ao carregar empresa')
-    }
-  }
-})
 
 async function submit(data) {
   loading.value = true
@@ -58,17 +37,17 @@ async function submit(data) {
       CompanyService.list({ cnpj: cnpjClean })
     ])
 
-    // Helper to check for duplicates, handling different API response structures
-    const isDuplicate = (response, currentId) => {
+    // Helper to check for duplicates
+    const isDuplicate = (response) => {
       const items = response.data.companies || response.data
-      return items.length > 0 && (!isEdit || items[0].id !== Number(currentId))
+      return items.length > 0
     }
 
-    if (isDuplicate(emailRes, id)) {
+    if (isDuplicate(emailRes)) {
       apiErrors.value.email = 'Este email já está em uso.'
     }
 
-    if (isDuplicate(cnpjRes, id)) {
+    if (isDuplicate(cnpjRes)) {
       apiErrors.value.cnpj = 'Este CNPJ já está cadastrado.'
     }
 
@@ -83,13 +62,8 @@ async function submit(data) {
       cnpj: cnpjClean
     }
 
-    if (isEdit) {
-      await CompanyService.update(id, payload)
-      toast.success('Empresa atualizada com sucesso!')
-    } else {
-      await CompanyService.create(payload)
-      toast.success('Empresa criada com sucesso!')
-    }
+    await CompanyService.create(payload)
+    toast.success('Empresa criada com sucesso!')
     router.push('/companies')
   } catch (err) {
     console.error(err)
@@ -105,7 +79,7 @@ async function submit(data) {
         toast.error(errorMessage)
       }
     } else {
-      toast.error('Erro ao salvar empresa.')
+      toast.error('Erro ao criar empresa.')
     }
   } finally {
     loading.value = false

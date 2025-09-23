@@ -53,7 +53,7 @@ const props = defineProps({
   },
   loading: {
     type: Boolean,
-    default: () => ({})
+    default: false
   }
 })
 
