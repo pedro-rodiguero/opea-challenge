@@ -1,4 +1,4 @@
-@import '../base/variables';
+@use '../base/variables';
 
 // Companies Page Styles
 
@@ -8,8 +8,8 @@
   h1 {
     font-size: 2rem;
     margin-bottom: 1.5rem;
-    color: $primary-color;
-    font-family: $font-main;
+    color: variables.$primary-color;
+    font-family: variables.$font-main;
     font-weight: 500;
   }
 

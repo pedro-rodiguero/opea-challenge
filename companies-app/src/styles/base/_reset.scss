@@ -1,3 +1,5 @@
+@use 'variables';
+
 /* CSS Reset and base box-sizing */
 *,
 *::before,
@@ -57,8 +59,8 @@ img {
 
 /* Set base background and color */
 body {
-  background: $background-light;
-  color: $font-color;
+  background: variables.$background-light;
+  color: variables.$font-color;
   min-height: 100vh;
-  font-family: $font-main, Arial, sans-serif;
+  font-family: variables.$font-main, Arial, sans-serif;
 }

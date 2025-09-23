@@ -1,0 +1,8 @@
+@use 'variables';
+
+@mixin main-font($weight: 400, $style: normal) {
+  font-family: variables.$font-main, "Jost", Arial, sans-serif;
+  font-weight: $weight;
+  font-style: $style;
+  color: variables.$font-color;
+}

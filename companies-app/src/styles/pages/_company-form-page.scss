@@ -1,4 +1,4 @@
-@import '../base/variables';
+@use '../base/variables';
 
 // Company Form Page Styles
 
@@ -8,8 +8,8 @@
   h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: $primary-color;
-    font-family: $font-main;
+    color: variables.$primary-color;
+    font-family: variables.$font-main;
     font-weight: 500;
   }
 

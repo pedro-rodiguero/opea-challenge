@@ -1,5 +1,5 @@
-@import '../base/variables';
-
+@use 'sass:color';
+@use '../base/variables';
 // Company Form styles
 
 .company-form {
@@ -10,7 +10,7 @@
   margin: 0 auto;
 
   label {
-    font-family: $font-main;
+    font-family: variables.$font-main;
     font-size: 1rem;
     color: #616161;
     font-weight: 500;
@@ -21,7 +21,7 @@
     input {
     width: 100%;
     padding: 8px 12px;
-    font-family: $font-main;
+    font-family: variables.$font-main;
     font-size: 1rem;
     border: 1.5px solid #ddd;
     border-radius: 4px;
@@ -32,8 +32,8 @@
 
     &:focus {
       outline: none;
-      border-color: $primary-color;
-      box-shadow: 0 0 0 2px rgba($primary-color, 0.15);
+      border-color: variables.$primary-color;
+      box-shadow: 0 0 0 2px rgba(variables.$primary-color, 0.15);
       background: #fff;
     }
   }
@@ -42,7 +42,7 @@
   input[type="email"] {
     &:focus {
       outline: none;
-      border-color: $primary-color;
+      border-color: variables.$primary-color;
     }
   }
 
@@ -53,18 +53,18 @@
 
     button,
     .router-link {
-      font-family: $font-main;
+      font-family: variables.$font-main;
       font-size: 1rem;
       border-radius: 4px;
       padding: 0.6em 1.2em;
       border: 1px solid transparent;
-      background: $primary-color;
+      background: variables.$primary-color;
       color: #fff;
       cursor: pointer;
       transition: border-color 0.25s;
 
       &:hover {
-        border-color: darken($primary-color, 10%);
+        border-color: color.adjust(variables.$primary-color, $lightness: -10%);
       }
     }
     .router-link {
@@ -73,19 +73,19 @@
       border: 1px solid #ddd;
       text-decoration: none;
       &:hover {
-        border-color: $primary-color;
-        color: $primary-color;
+        border-color: variables.$primary-color;
+        color: variables.$primary-color;
       }
     }
     button:last-child {
       background: #fff;
-      color: $primary-color;
+      color: variables.$primary-color;
       transition: background 0.5s, color 0.5s, border-color 0.5s;
 
       &:hover {
-        background: $secondary-color;
+        background: variables.$secondary-color;
         color: #fff;
-        border-color: $secondary-color;
+        border-color: variables.$secondary-color;
       }
     }
 }

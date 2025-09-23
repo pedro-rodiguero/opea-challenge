@@ -1,11 +1,12 @@
-@import 'base/variables';
-@import 'base/colors';
-@import 'base/typography';
-@import 'base/reset';
+@use 'base/variables';
+@use 'base/mixins';
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/colors';
+ 
+@use 'components/navbar';
+@use 'components/company-list';
+@use 'components/company-form';
 
-@import 'components/navbar';
-@import 'components/company-list';
-@import 'components/company-form';
-
-@import 'pages/companies-page';
-@import 'pages/company-form-page';
+@use 'pages/companies-page';
+@use 'pages/company-form-page';

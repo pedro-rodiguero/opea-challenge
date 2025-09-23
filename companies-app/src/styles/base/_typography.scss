@@ -1,65 +1,42 @@
-@import 'variables';
+@use 'variables';
+@use 'mixins';
 
 // Typography base styles
 
 body {
-  font-family: $font-main, "Jost", Arial, sans-serif;
+  @include mixins.main-font;
   font-size: 16px;
-  color: #616161;
-  font-style: normal;
-  font-weight: 400;
   line-height: 1.5;
 }
 
 h1, h2, h3 {
-  font-family: $font-main, "Jost", Arial, sans-serif;
-  font-weight: 400;
-  color: #616161;
+  @include mixins.main-font;
 }
 
 label {
-  font-family: $font-main, "Jost", Arial, sans-serif;
-  font-weight: 500;
+  @include mixins.main-font($weight: 500);
   font-size: 14px;
-  color: #616161;
   letter-spacing: 1.25px;
 }
 
 .paragraph {
-  font-family: $font-main, "Jost", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  @include mixins.main-font;
   font-size: 16px;
   line-height: 20px;
-  color: #616161;
 }
 
 .paragraph-small {
-  font-family: $font-main, "Jost", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  @include mixins.main-font;
   font-size: 13px;
   line-height: 18px;
-  color: #616161;
 }
 
 .paragraph-small-alt {
-  font-family: $font-main, "Jost", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  @include mixins.main-font;
   font-size: 12px;
   line-height: 16px;
-  color: #616161;
   display: flex;
   align-items: center;
-}
-
-.text-disabled {
-  color: #969696;
-}
-
-.text-subtle {
-  color: #7f7f7f;
 }
 
 .text-right {
