@@ -120,7 +120,7 @@ async function submit() {
   try {
     const cnpjClean = form.cnpj.replace(/\D/g, '')
 
-    // Validação final antes do envio
+    // Validate uniqueness of email and cnpj
     const [emailRes, cnpjRes] = await Promise.all([
       CompanyService.list({ email: form.email }),
       CompanyService.list({ cnpj: cnpjClean })
@@ -137,7 +137,7 @@ async function submit() {
     }
 
     if (Object.keys(apiErrors.value).length > 0) {
-      return // Para a submissão
+      return // Stop submission if there are API errors
     }
 
     const payload = { name: form.name, email: form.email, cnpj: cnpjClean }

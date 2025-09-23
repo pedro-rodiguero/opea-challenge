@@ -144,7 +144,7 @@ async function submit() {
   try {
     const cnpjClean = form.cnpj.replace(/\D/g, '')
 
-    // verifica duplicidade apenas se mudou
+    // Verifies if email or cnpj have changed and if they are unique
     if (form.email !== originalData.value.email) {
       const { data: emailRes } = await CompanyService.list({ email: form.email })
       const emailExists = (emailRes.companies || emailRes).some(
@@ -188,7 +188,7 @@ async function submit() {
 
     await CompanyService.update(props.id, payload)
 
-    // sobrescreve originalData com os dados salvos
+    // Updates original data
     originalData.value = {
       name: form.name,
       email: form.email,
