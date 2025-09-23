@@ -58,6 +58,18 @@ watch(form, () => {
   validate()
 }, { deep: true })
 
+// Clear API errors on input change
+watch(() => form.email, () => {
+  if (apiErrors.value.email) {
+    apiErrors.value.email = ''
+  }
+})
+watch(() => form.cnpj, () => {
+  if (apiErrors.value.cnpj) {
+    apiErrors.value.cnpj = ''
+  }
+})
+
 watch(apiErrors, (newErrors) => {
   Object.assign(errors, newErrors)
 }, { deep: true })
