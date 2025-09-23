@@ -1,9 +1,7 @@
 # App de Cadastro de Empresas
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 Este é um projeto simples de uma aplicação Vue 3 para gerenciar um CRUD (Criar, Ler, Atualizar, Deletar) de empresas. A aplicação foi desenvolvida como parte de um desafio e demonstra conceitos importantes de desenvolvimento front-end, como componentização, validação de formulários, comunicação com API e boas práticas de organização de código.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
 ## Tecnologias Utilizadas
 
 - **Vue 3** (com Composition API e `<script setup>`)
@@ -139,3 +137,27 @@ await CompanyService.update(props.id, payload)
     ```
 
 A aplicação estará disponível em `http://localhost:5173`.
+
+## Deploy no GitHub Pages
+
+Para fazer o deploy deste projeto no GitHub Pages, siga os passos abaixo.
+
+### 1. Configurar o `vite.config.js`
+
+O arquivo `vite.config.js` na raiz do projeto (`companies-app/`) deve ter a propriedade `base` configurada com o nome do seu repositório.
+
+```javascript
+// vite.config.js
+export default {
+  // ...
+  base: '/<NOME_DO_REPOSITORIO>/',
+}
+```
+
+### 2. Configurar o Repositório no GitHub
+
+1.  Vá para o seu repositório no GitHub.
+2.  Clique em **Settings** (Configurações) > **Pages**.
+3.  Na seção "Build and deployment", em "Source", selecione **GitHub Actions**.
+
+Após configurar, a cada `push` na sua branch principal, a Action será executada, fará o build do projeto e o publicará no GitHub Pages. A URL será algo como `https://<SEU_USUARIO>.github.io/<NOME_DO_REPOSITORIO>/`.
