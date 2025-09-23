@@ -50,18 +50,25 @@ async function submit(data) {
   apiErrors.value = {} // Clear previous errors
 
   try {
-    // 1. Check for duplicate Email
-    const { data: emailRes } = await CompanyService.list({ email: data.email })
-    const byEmail = emailRes.companies || emailRes
-    if (byEmail.length > 0 && (!isEdit || byEmail[0].id !== Number(id))) {
+    const cnpjClean = data.cnpj.replace(/\D/g, '')
+
+    // 1. Perform duplicate checks in parallel
+    const [emailRes, cnpjRes] = await Promise.all([
+      CompanyService.list({ email: data.email }),
+      CompanyService.list({ cnpj: cnpjClean })
+    ])
+
+    // Helper to check for duplicates, handling different API response structures
+    const isDuplicate = (response, currentId) => {
+      const items = response.data.companies || response.data
+      return items.length > 0 && (!isEdit || items[0].id !== Number(currentId))
+    }
+
+    if (isDuplicate(emailRes, id)) {
       apiErrors.value.email = 'Este email já está em uso.'
     }
 
-    // 2. Check for duplicate CNPJ
-    const cnpjClean = data.cnpj.replace(/\D/g, '')
-    const { data: cnpjRes } = await CompanyService.list({ cnpj: cnpjClean })
-    const byCnpj = cnpjRes.companies || cnpjRes
-    if (byCnpj.length > 0 && (!isEdit || byCnpj[0].id !== Number(id))) {
+    if (isDuplicate(cnpjRes, id)) {
       apiErrors.value.cnpj = 'Este CNPJ já está cadastrado.'
     }
 
@@ -69,13 +76,18 @@ async function submit(data) {
       return // Stop submission if there are errors
     }
 
-    // 3. Save the data
-    data.cnpj = cnpjClean // Save the CNPJ without formatting
+    // 2. Save the data
+    const payload = {
+      name: data.name,
+      email: data.email,
+      cnpj: cnpjClean
+    }
+
     if (isEdit) {
-      await CompanyService.update(id, data)
+      await CompanyService.update(id, payload)
       toast.success('Empresa atualizada com sucesso!')
     } else {
-      await CompanyService.create(data)
+      await CompanyService.create(payload)
       toast.success('Empresa criada com sucesso!')
     }
     router.push('/companies')
