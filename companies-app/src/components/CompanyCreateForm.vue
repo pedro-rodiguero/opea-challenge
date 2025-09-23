@@ -2,14 +2,14 @@
   <form class="company-form" @submit.prevent="submit">
     <div>
       <label>Nome</label><br />
-      <input v-model="localForm.name" @blur="touched.name = true" />
+      <input v-model="form.name" @blur="touched.name = true" />
       <div v-if="errors.name" class="error-message">{{ errors.name }}</div>
     </div>
 
     <div>
       <label>Email</label><br />
       <input
-        v-model="localForm.email"
+        v-model="form.email"
         type="email"
         @blur="touched.email = true"
       />
@@ -19,7 +19,7 @@
     <div>
       <label>CNPJ</label><br />
       <input
-        v-model="localForm.cnpj"
+        v-model="form.cnpj"
         @input="onCnpjInput"
         @blur="touched.cnpj = true"
         maxlength="18"
@@ -33,56 +33,41 @@
         <span v-if="loading" class="spinner"></span>
         <span>{{ loading ? 'Salvando...' : 'Salvar' }}</span>
       </button>
-      <button @click="$router.push('/companies')">Cancelar</button>
+      <button type="button" @click="$router.push('/companies')">Cancelar</button>
     </div>
   </form>
 </template>
 
 <script setup>
-import { reactive, watch, computed } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 import { validateCnpj } from '../utils/validators'
+import CompanyService from '../services/CompanyService'
 
-const props = defineProps({
-  modelValue: {
-    type: Object,
-    default: () => ({ name: '', email: '', cnpj: '' })
-  },
-  apiErrors: {
-    type: Object,
-    default: () => ({})
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  }
-})
+const router = useRouter()
+const toast = useToast()
 
-const emit = defineEmits(['update:modelValue', 'submit'])
-
-const localForm = reactive({ ...props.modelValue })
+const form = reactive({ name: '', email: '', cnpj: '' })
 const touched = reactive({ name: false, email: false, cnpj: false })
 const errors = reactive({ name: '', email: '', cnpj: '' })
+const apiErrors = ref({})
+const loading = ref(false)
 
-watch(() => props.modelValue, (newVal) => {
-  // Sync external modelValue changes with localForm
-  Object.assign(localForm, newVal)
-}, { deep: true })
-
-watch(localForm, (val) => {
-  emit('update:modelValue', val)
+watch(form, () => {
   validate()
 }, { deep: true })
 
-watch(() => props.apiErrors, (newErrors) => {
+watch(apiErrors, (newErrors) => {
   Object.assign(errors, newErrors)
 }, { deep: true })
 
-const isNameValid = computed(() => !!localForm.name.trim())
-const isEmailValid = computed(() => localForm.email.includes('@'))
-const isCnpjValid = computed(() => validateCnpj(localForm.cnpj))
+const isNameValid = computed(() => !!form.name.trim())
+const isEmailValid = computed(() => form.email.includes('@'))
+const isCnpjValid = computed(() => validateCnpj(form.cnpj))
 
 const isFormValid = computed(() => {
-  return isNameValid.value && isEmailValid.value && isCnpjValid.value
+  return isNameValid.value && isEmailValid.value && isCnpjValid.value && Object.values(apiErrors.value).every(e => !e)
 })
 
 function validate() {
@@ -94,29 +79,65 @@ function validate() {
   }
 
   // Email
-  if (touched.email && localForm.email && !isEmailValid.value) {
+  if (touched.email && form.email && !isEmailValid.value) {
     errors.email = 'O email deve ser válido.'
-  } else if (!props.apiErrors.email) { // Clear api error if user changes the input
+  } else if (!apiErrors.value.email) {
     errors.email = ''
   }
 
   // CNPJ
-  if (touched.cnpj && localForm.cnpj && !isCnpjValid.value) {
+  if (touched.cnpj && form.cnpj && !isCnpjValid.value) {
     errors.cnpj = 'O CNPJ é inválido.'
-  } else if (!props.apiErrors.cnpj) { // Clear api error if user changes the input
+  } else if (!apiErrors.value.cnpj) {
     errors.cnpj = ''
   }
 }
 
-function submit() {
+async function submit() {
   Object.keys(touched).forEach(key => touched[key] = true)
   validate()
 
   if (!isFormValid.value) {
-    alert('Por favor, corrija os erros no formulário.')
+    toast.error('Por favor, corrija os erros no formulário.')
     return
   }
-  emit('submit', { ...localForm })
+
+  loading.value = true
+  apiErrors.value = {}
+
+  try {
+    const cnpjClean = form.cnpj.replace(/\D/g, '')
+
+    // Validação final antes do envio
+    const [emailRes, cnpjRes] = await Promise.all([
+      CompanyService.list({ email: form.email }),
+      CompanyService.list({ cnpj: cnpjClean })
+    ])
+
+    const companiesByEmail = emailRes.data.companies || emailRes.data;
+    if (companiesByEmail.some(c => c.email === form.email)) {
+      apiErrors.value.email = 'Este email já está em uso.'
+    }
+
+    const companiesByCnpj = cnpjRes.data.companies || cnpjRes.data;
+    if (companiesByCnpj.some(c => c.cnpj === cnpjClean)) {
+      apiErrors.value.cnpj = 'Este CNPJ já está cadastrado.'
+    }
+
+    if (Object.keys(apiErrors.value).length > 0) {
+      return // Para a submissão
+    }
+
+    const payload = { name: form.name, email: form.email, cnpj: cnpjClean }
+    await CompanyService.create(payload)
+    toast.success('Empresa criada com sucesso!')
+    router.push('/companies')
+  } catch (err) {
+    console.error(err)
+    toast.error('Erro ao criar empresa.')
+  } finally {
+    loading.value = false
+  }
 }
 
 // CNPJ mask handler
@@ -126,17 +147,11 @@ function onCnpjInput(e) {
   v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
   v = v.replace(/\.(\d{3})(\d)/, '.$1/$2')
   v = v.replace(/(\d{4})(\d)/, '$1-$2')
-  localForm.cnpj = v
+  form.cnpj = v
 }
 </script>
 
 <style scoped>
-.error-message {
-  color: #b00020;
-  font-size: 0.9em;
-  margin-top: 4px;
-}
-
 .form-actions button[type="submit"] {
   display: inline-flex;
   align-items: center;
