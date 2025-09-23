@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Execute when code is pushed to main branch
   push:
-    branches: ['main']
+    branches: ["main"]
 
   # Allow manual deployment from the Actions tab
   workflow_dispatch:
@@ -17,7 +17,7 @@ permissions:
 
 # Avoid multiple concurrent deployments
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -33,17 +33,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
+          cache-dependency-path: companies-app/package-lock.json
       - name: Install dependencies
         run: npm install
+        working-directory: ./companies-app
       - name: Build
         run: npm run build
+        working-directory: ./companies-app
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          # Upload from the correct build directory
+          path: "./companies-app/dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
