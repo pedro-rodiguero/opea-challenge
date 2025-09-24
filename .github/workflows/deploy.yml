@@ -43,6 +43,9 @@ jobs:
         working-directory: ./companies-app
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+      - name: Copy index.html to 404.html
+        run: cp companies-app/dist/index.html companies-app/dist/404.html
+        shell: bash
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
