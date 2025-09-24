@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "Aurora Tech Solutions",
+        "email": "contato@auroratech.com",
+        "cnpj": "12345678000195"
+    },
+    {
+        "id": 2,
+        "name": "Verde Vida Alimentos",
+        "email": "vendas@verdevida.com.br",
+        "cnpj": "23456789000160"
+    },
+    {
+        "id": 3,
+        "name": "Solaris Energia Renovável",
+        "email": "suporte@solarisenergia.com",
+        "cnpj": "34567890000116"
+    },
+    {
+        "id": 4,
+        "name": "NetPrime Telecom",
+        "email": "atendimento@netprime.com",
+        "cnpj": "45678901000172"
+    },
+    {
+        "id": 5,
+        "name": "MundoPet Produtos Animais",
+        "email": "contato@mundopet.com",
+        "cnpj": "56789012000129"
+    },
+    {
+        "id": 6,
+        "name": "Bons Ventos Turismo",
+        "email": "reservas@bonsventos.com.br",
+        "cnpj": "67890123000185"
+    },
+    {
+        "id": 7,
+        "name": "Alpha Security Sistemas",
+        "email": "suporte@alphasecurity.com",
+        "cnpj": "78901234000141"
+    },
+    {
+        "id": 8,
+        "name": "Estilo Urbano Moda",
+        "email": "contato@estilourbano.com",
+        "cnpj": "89012345000108"
+    },
+    {
+        "id": 9,
+        "name": "AgroPlus Insumos",
+        "email": "vendas@agroplus.com.br",
+        "cnpj": "90123456000164"
+    },
+    {
+        "id": 10,
+        "name": "Nova Era Educação",
+        "email": "secretaria@novaeraedu.com",
+        "cnpj": "11987654000120"
+    },
+    {
+        "id": 11,
+        "name": "BlueOcean Logística",
+        "email": "contato@blueocean.com",
+        "cnpj": "22876543000186"
+    },
+    {
+        "id": 12,
+        "name": "Prime Arte Gráfica",
+        "email": "orcamentos@primearte.com.br",
+        "cnpj": "33765432000142"
+    },
+    {
+        "id": 13,
+        "name": "Doce Vida Confeitaria",
+        "email": "pedidos@docevida.com",
+        "cnpj": "44654321000109"
+    },
+    {
+        "id": 14,
+        "name": "EcoLar Construções Sustentáveis",
+        "email": "projetos@ecolar.com.br",
+        "cnpj": "55543210000175"
+    },
+    {
+        "id": 15,
+        "name": "PixelWave Design",
+        "email": "studio@pixelwave.com",
+        "cnpj": "66432109000131"
+    }
+]
