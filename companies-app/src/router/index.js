@@ -5,15 +5,15 @@ import CompanyEditPage from '../pages/CompanyEditPage.vue'
 
 
 const routes = [
-{ path: '/', redirect: '/opea-challenge/companies' },
-{ path: '/opea-challenge/companies', component: CompaniesPage },
-{ path: '/opea-challenge/companies/new', name: 'CompanyCreate', component: CompanyCreatePage },
-{ path: '/opea-challenge/companies/:id/edit', name: 'CompanyEdit', component: CompanyEditPage }
+{ path: '/', redirect: '/companies' },
+{ path: '/companies', component: CompaniesPage },
+{ path: '/companies/new', name: 'CompanyCreate', component: CompanyCreatePage },
+{ path: '/companies/:id/edit', name: 'CompanyEdit', component: CompanyEditPage }
 ]
 
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes
 })
 

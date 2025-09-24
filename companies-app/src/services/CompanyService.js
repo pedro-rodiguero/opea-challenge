@@ -13,18 +13,18 @@ const api = axios.create({
 export default {
     // params: { name: 'foo' } or { text: 'foo' }
     list(params = {}) {
-        return api.get('opea-challenge/companies', { params })
+        return api.get('/companies', { params })
     },
     get(id) {
-        return api.get(`opea-challenge/companies/${id}`)
+        return api.get(`/companies/${id}`)
     },
     create(payload) {
-        return api.post('opea-challenge/companies', payload)
+        return api.post('/companies', payload)
     },
     update(id, payload) {
-        return api.put(`opea-challenge/companies/${id}`, payload)
+        return api.put(`/companies/${id}`, payload)
     },
     delete(id) {
-        return api.delete(`opea-challenge/companies/${id}`)
+        return api.delete(`/companies/${id}`)
     }
 }
