@@ -20,9 +20,11 @@ const api = {
             }
             if (path.includes('/companies/')) {
                 const id = parseInt(path.split('/').pop());
-                data = data.find(c => c.id === id);
+                const company = data.find(c => c.id === id);
+                setTimeout(() => resolve({ data: company }), 200); // Simula latência da rede
+                return;
             }
-            setTimeout(() => resolve({ data: { companies: data } }), 200); // Simula latência da rede
+            setTimeout(() => resolve({ data: { companies: data } }), 200);
         });
     },
     post(path, payload) {
